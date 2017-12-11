@@ -20,7 +20,7 @@
     },
     "autoload" : {
         "psr-4" : {
-            "ktaris\\yii2-cfdi\\" : ""
+            "ktaris\\cfdi\\" : ""
         }
     }
 }
