@@ -12,9 +12,14 @@ use ktaris\cfdi\base\Comprobante;
 use ktaris\cfdi\base\Emisor;
 use ktaris\cfdi\base\Receptor;
 use ktaris\cfdi\base\Concepto;
+use ktaris\cfdi\base\Impuestos;
+use ktaris\cfdi\complementos\TimbreFiscalDigital;
+use ktaris\cfdi\components\ImpuestosTrait;
 
 class CFDI extends Comprobante
 {
+    use ImpuestosTrait;
+
     // ==================================================================
     //
     // Modelos asociados.
@@ -24,6 +29,15 @@ class CFDI extends Comprobante
     public $Emisor;
     public $Receptor;
     public $Conceptos;
+    public $Impuestos;
+
+    // ==================================================================
+    //
+    // Complementos
+    //
+    // ------------------------------------------------------------------
+
+    public $TimbreFiscalDigital;
 
     // ==================================================================
     //
@@ -36,15 +50,21 @@ class CFDI extends Comprobante
         $this->Emisor = new Emisor;
         $this->Receptor = new Receptor;
         $this->Conceptos = [];
+        // Impuestos no es requerido.
+
+        $this->TimbreFiscalDigital = new TimbreFiscalDigital;
     }
 
     public function load($data, $formName = null)
     {
-        $loaded = parent::load($data, $formName);
+        $loaded = parent::load([$this->nombreDeClase => $data], $formName);
+
 
         $loaded &= $this->Emisor->load($data);
         $loaded &= $this->Receptor->load($data);
         $loaded &= $this->loadConceptos($data);
+        $this->loadImpuestos($data);
+        $loaded &= $this->TimbreFiscalDigital->load($data);
 
         return $loaded;
     }
@@ -66,6 +86,22 @@ class CFDI extends Comprobante
                     $model->load([$model->nombreDeClase => $modelData]);
                     $this->Conceptos[$i] = $model;
                 }
+
+                $loaded = true;
+            }
+        }
+
+        return $loaded;
+    }
+
+    protected function loadImpuestos($data)
+    {
+        $loaded = false;
+
+        if (empty($this->Impuestos)) {
+            if (!empty($data['Impuestos'])) {
+                $this->Impuestos = new Impuestos;
+                $this->Impuestos->load($data);
 
                 $loaded = true;
             }
