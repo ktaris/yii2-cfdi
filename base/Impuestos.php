@@ -66,4 +66,33 @@ class Impuestos extends BaseModel
 
         return true;
     }
+
+    protected function atributosPropiosParaJson()
+    {
+        return [
+            'TotalImpuestosRetenidos',
+            'TotalImpuestosTrasladados',
+        ];
+    }
+
+    public function toJson()
+    {
+        $arreglo = parent::toJson();
+
+        if (!empty($this->Traslados)) {
+            $arreglo['Traslados'] = [];
+            foreach ($this->Traslados as $index => $model) {
+                $arreglo['Traslados'][] = $model->toJson();
+            }
+        }
+
+        if (!empty($this->Retenciones)) {
+            $arreglo['Retenciones'] = [];
+            foreach ($this->Retenciones as $index => $model) {
+                $arreglo['Retenciones'][] = $model->toJson();
+            }
+        }
+
+        return $arreglo;
+    }
 }

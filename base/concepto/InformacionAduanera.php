@@ -6,27 +6,25 @@
  * @version 0.1.0
  */
 
-namespace ktaris\cfdi\base;
+namespace ktaris\cfdi\base\concepto;
 
 use ktaris\cfdi\components\BaseModel;
 
-class Retencion extends BaseModel
+class InformacionAduanera extends BaseModel
 {
-    public $Impuesto;
-    public $Importe;
+    public $NumeroPedimento;
 
     public function rules()
     {
         return [
-            [['Impuesto', 'Importe'], 'safe'],
+            [['NumeroPedimento'], 'safe'],
         ];
     }
 
     protected function atributosPropiosParaJson()
     {
         return [
-            'Impuesto',
-            'Importe',
+            'NumeroPedimento',
         ];
     }
 }

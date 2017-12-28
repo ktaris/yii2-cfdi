@@ -6,13 +6,11 @@
  * @version 0.1.0
  */
 
-namespace ktaris\cfdi\base;
+namespace ktaris\cfdi\base\concepto;
 
 use ktaris\cfdi\components\BaseModel;
-use ktaris\cfdi\base\ConceptoTraslado as Traslado;
-use ktaris\cfdi\base\ConceptoRetencion as Retencion;
 
-class ConceptoImpuestos extends BaseModel
+class Impuestos extends BaseModel
 {
     public $Traslados;
     public $Retenciones;
@@ -54,5 +52,37 @@ class ConceptoImpuestos extends BaseModel
         }
 
         return true;
+    }
+
+    // ==================================================================
+    //
+    // Métodos para JSON para PreCFDI.
+    //
+    // ------------------------------------------------------------------
+
+    protected function atributosPropiosParaJson()
+    {
+        return [];
+    }
+
+    public function toJson()
+    {
+        $arreglo = parent::toJson();
+
+        if (!empty($this->Traslados)) {
+            $arreglo['Traslados'] = [];
+            foreach ($this->Traslados as $index => $model) {
+                $arreglo['Traslados'][] = $model->toJson();
+            }
+        }
+
+        if (!empty($this->Retenciones)) {
+            $arreglo['Retenciones'] = [];
+            foreach ($this->Retenciones as $index => $model) {
+                $arreglo['Retenciones'][] = $model->toJson();
+            }
+        }
+
+        return $arreglo;
     }
 }

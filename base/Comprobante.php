@@ -37,4 +37,28 @@ class Comprobante extends BaseModel
             [['Version', 'Serie', 'Folio', 'Fecha', 'Sello','FormaPago', 'NoCertificado', 'Certificado', 'CondicionesDePago', 'SubTotal', 'Descuento', 'Moneda', 'TipoCambio', 'Total', 'TipoDeComprobante', 'MetodoPago', 'LugarExpedicion', 'Confirmacion'], 'safe'],
         ];
     }
+
+    protected function atributosPropiosParaJson()
+    {
+        return [
+            'Version',
+            'Serie',
+            'Folio',
+            'Fecha',
+            'Sello',
+            'FormaPago',
+            'NoCertificado',
+            'Certificado',
+            'CondicionesDePago',
+            'SubTotal',
+            'Descuento',
+            'Moneda',
+            'TipoCambio',
+            'Total',
+            'TipoDeComprobante',
+            'MetodoPago',
+            'LugarExpedicion',
+            'Confirmacion',
+        ];
+    }
 }

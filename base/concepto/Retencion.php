@@ -6,11 +6,11 @@
  * @version 0.1.0
  */
 
-namespace ktaris\cfdi\base;
+namespace ktaris\cfdi\base\concepto;
 
 use ktaris\cfdi\components\BaseModel;
 
-class ConceptoTraslado extends BaseModel
+class Retencion extends BaseModel
 {
     public $Base;
     public $Impuesto;
@@ -22,6 +22,17 @@ class ConceptoTraslado extends BaseModel
     {
         return [
             [['Base', 'Impuesto', 'TipoFactor', 'TasaOCuota', 'Importe'], 'safe'],
+        ];
+    }
+
+    protected function atributosPropiosParaJson()
+    {
+        return [
+            'Base',
+            'Impuesto',
+            'TipoFactor',
+            'TasaOCuota',
+            'Importe',
         ];
     }
 }

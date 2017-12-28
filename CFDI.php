@@ -13,7 +13,7 @@ use ktaris\cfdi\base\Emisor;
 use ktaris\cfdi\base\Receptor;
 use ktaris\cfdi\base\Concepto;
 use ktaris\cfdi\base\Impuestos;
-use ktaris\cfdi\complementos\TimbreFiscalDigital;
+use ktaris\cfdi\complemento\Complemento;
 use ktaris\cfdi\components\ImpuestosTrait;
 
 class CFDI extends Comprobante
@@ -37,7 +37,7 @@ class CFDI extends Comprobante
     //
     // ------------------------------------------------------------------
 
-    public $TimbreFiscalDigital;
+    public $Complemento;
 
     // ==================================================================
     //
@@ -52,7 +52,7 @@ class CFDI extends Comprobante
         $this->Conceptos = [];
         // Impuestos no es requerido.
 
-        $this->TimbreFiscalDigital = new TimbreFiscalDigital;
+        $this->Complemento = new Complemento;
     }
 
     public function load($data, $formName = null)
@@ -64,7 +64,7 @@ class CFDI extends Comprobante
         $loaded &= $this->Receptor->load($data);
         $loaded &= $this->loadConceptos($data);
         $this->loadImpuestos($data);
-        $loaded &= $this->TimbreFiscalDigital->load($data);
+        $loaded &= $this->Complemento->load($data);
 
         return $loaded;
     }
@@ -108,5 +108,32 @@ class CFDI extends Comprobante
         }
 
         return $loaded;
+    }
+
+    // ==================================================================
+    //
+    // Métodos para JSON para PreCFDI.
+    //
+    // ------------------------------------------------------------------
+
+    public function toJson()
+    {
+        $arreglo = parent::toJson();
+
+        $arreglo['Emisor'] = $this->Emisor->toJson();
+        $arreglo['Receptor'] = $this->Receptor->toJson();
+        $arreglo['Conceptos'] = [];
+        foreach ($this->Conceptos as $index => $model) {
+            $arreglo['Conceptos'][] = $model->toJson();
+        }
+        if (!empty($this->Impuestos)) {
+            $arreglo['Impuestos'] = $this->Impuestos->toJson();
+        }
+
+        if ($this->Complemento->tieneComplemento) {
+            $arreglo['Complemento'] = $this->Complemento->toJson();
+        }
+
+        return $arreglo;
     }
 }

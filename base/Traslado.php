@@ -23,4 +23,14 @@ class Traslado extends BaseModel
             [['Impuesto', 'TipoFactor', 'TasaOCuota', 'Importe'], 'safe'],
         ];
     }
+
+    protected function atributosPropiosParaJson()
+    {
+        return [
+            'Impuesto',
+            'TipoFactor',
+            'TasaOCuota',
+            'Importe',
+        ];
+    }
 }

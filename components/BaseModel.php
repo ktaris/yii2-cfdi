@@ -25,4 +25,28 @@ class BaseModel extends Model
     {
         return (new \ReflectionClass($this))->getShortName();
     }
+
+    public function toJson()
+    {
+        $arreglo = [];
+
+        foreach ($this->atributosPropiosParaJson() as $index => $atributo) {
+            $arreglo[$atributo] = $this->$atributo;
+        }
+
+        return $arreglo;
+    }
+
+    public function getAtributosDeNodo()
+    {
+        $arreglo = [];
+
+        foreach ($this->atributosPropiosParaJson() as $index => $atributo) {
+            if (isset($this->$atributo)) {
+                $arreglo[$atributo] = $this->$atributo;
+            }
+        }
+
+        return $arreglo;
+    }
 }
