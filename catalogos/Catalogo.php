@@ -13,7 +13,19 @@ use ktaris\cfdi\catalogos\CatalogoException;
 
 abstract class Catalogo extends Component
 {
-    abstract public function getNombre();
+    abstract public static function nombre();
+
+    public static function catalogo()
+    {
+        $arregloOut = [];
+        $clase = self::className();
+        $model = new $clase;
+        foreach ($model->_data as $clave => $descripcion) {
+            $arregloOut[$clave] = $clave.' - '.$descripcion;
+        }
+
+        return $arregloOut;
+    }
 
     public function getData()
     {
@@ -27,11 +39,11 @@ abstract class Catalogo extends Component
 
     public static function descripcion($clave)
     {
-        $clase = get_called_class();
+        $clase = self::className();
         $obj = new $clase;
 
-        if (!array_key_exists ($clave, $obj->data)) {
-            throw new CatalogoException('No se encontró la clave "'.$clave.'" en el catálogo '.$obj->nombre);
+        if (!array_key_exists($clave, $obj->data)) {
+            throw new CatalogoException('No se encontró la clave "'.$clave.'" en el catálogo '.$obj::nombre());
         }
 
         return $obj->getDescripcion($clave);

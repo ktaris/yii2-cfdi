@@ -17,7 +17,7 @@ class MetodoPago extends Catalogo
         'PPD' => 'Pago en parcialidades o diferido',
     ];
 
-    public function getNombre()
+    public static function nombre()
     {
         return 'Método de Pago';
     }

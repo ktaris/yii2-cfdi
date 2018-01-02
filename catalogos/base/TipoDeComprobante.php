@@ -20,7 +20,7 @@ class TipoDeComprobante extends Catalogo
         'P' => 'Pago',
     ];
 
-    public function getNombre()
+    public static function nombre()
     {
         return 'Tipo de Comprobante';
     }

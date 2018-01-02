@@ -36,7 +36,7 @@ class FormaPago extends Catalogo
         '99' => 'Por definir',
     ];
 
-    public function getNombre()
+    public static function nombre()
     {
         return 'Forma de Pago';
     }

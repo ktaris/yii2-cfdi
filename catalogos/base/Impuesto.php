@@ -18,7 +18,7 @@ class Impuesto extends Catalogo
         '003' => 'IEPS',
     ];
 
-    public function getNombre()
+    public static function nombre()
     {
         return 'Impuesto';
     }

@@ -36,8 +36,8 @@ class RegimenFiscal extends Catalogo
         '615' => 'Régimen de los ingresos por obtención de premios',
     ];
 
-    public function getNombre()
+    public static function nombre()
     {
-        return 'Impuesto';
+        return 'Regimen Fiscal';
     }
 }

@@ -37,7 +37,7 @@ class UsoCFDI extends Catalogo
         'P01' => 'Por definir',
     ];
 
-    public function getNombre()
+    public static function nombre()
     {
         return 'Uso de CFDI';
     }
