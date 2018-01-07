@@ -25,4 +25,17 @@ class TimbreFiscalDigital extends BaseModel
             [['Version', 'UUID', 'FechaTimbrado', 'SelloCFD', 'NoCertificadoSAT', 'SelloSAT'], 'safe'],
         ];
     }
+
+    public function getCadenaOriginal()
+    {
+        $cadenaOriginal = '||';
+        $cadenaOriginal .= $this->Version.'|';
+        $cadenaOriginal .= $this->UUID.'|';
+        $cadenaOriginal .= $this->FechaTimbrado.'|';
+        $cadenaOriginal .= $this->SelloCFD.'|';
+        $cadenaOriginal .= $this->NoCertificadoSAT.'|';
+        $cadenaOriginal .= '|';
+
+        return $cadenaOriginal;
+    }
 }
