@@ -12,10 +12,14 @@ use ktaris\cfdi\catalogos\Catalogo;
 
 class Impuesto extends Catalogo
 {
+    const ISR = '001';
+    const IVA = '002';
+    const IEPS = '003';
+
     protected $_data = [
-        '001' => 'ISR',
-        '002' => 'IVA',
-        '003' => 'IEPS',
+        self::ISR => 'ISR',
+        self::IVA => 'IVA',
+        self::IEPS => 'IEPS',
     ];
 
     public static function nombre()

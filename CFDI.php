@@ -9,6 +9,7 @@
 namespace ktaris\cfdi;
 
 use ktaris\cfdi\base\Comprobante;
+use ktaris\cfdi\base\CfdiRelacionados;
 use ktaris\cfdi\base\Emisor;
 use ktaris\cfdi\base\Receptor;
 use ktaris\cfdi\base\Concepto;
@@ -26,6 +27,7 @@ class CFDI extends Comprobante
     //
     // ------------------------------------------------------------------
 
+    public $CfdiRelacionados;
     public $Emisor;
     public $Receptor;
     public $Conceptos;
@@ -59,12 +61,13 @@ class CFDI extends Comprobante
     {
         $loaded = parent::load([$this->nombreDeClase => $data], $formName);
 
-
+        $this->loadCfdiRelacionados($data);
         $loaded &= $this->Emisor->load($data);
         $loaded &= $this->Receptor->load($data);
         $loaded &= $this->loadConceptos($data);
         $this->loadImpuestos($data);
-        $loaded &= $this->Complemento->load($data);
+        // No necesariamente se recibe Complemento, es decir, no siempre se tiene el TFD.
+        $this->Complemento->load($data);
 
         return $loaded;
     }
@@ -74,6 +77,17 @@ class CFDI extends Comprobante
     // Métodos auxiliares protegidos.
     //
     // ------------------------------------------------------------------
+
+    protected function loadCfdiRelacionados($data)
+    {
+        if (empty($data['CfdiRelacionados'])) {
+            return;
+        }
+
+        $this->CfdiRelacionados = new CfdiRelacionados;
+
+        $this->CfdiRelacionados->load($data);
+    }
 
     protected function loadConceptos($data)
     {
