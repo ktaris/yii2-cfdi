@@ -14,6 +14,7 @@ class Complemento extends BaseModel
 {
     public $TimbreFiscalDigital;
     public $ComercioExterior;
+    public $Pagos;
 
     /**
      * Este objeto se encarga de cargar los posibles complementos que
@@ -41,6 +42,11 @@ class Complemento extends BaseModel
             $this->ComercioExterior->load($data['ComercioExterior']);
         }
 
+        if (!empty($data['Pagos'])) {
+            $this->Pagos = new Pagos;
+            $this->Pagos->load($data['Pagos']);
+        }
+
         return true;
     }
 
@@ -50,6 +56,10 @@ class Complemento extends BaseModel
 
         if ($this->tieneComercioExterior) {
             $arreglo['ComercioExterior'] = $this->ComercioExterior->toJson();
+        }
+
+        if ($this->tienePagos) {
+            $arreglo['Pagos'] = $this->Pagos->toJson();
         }
 
         return $arreglo;
@@ -86,6 +96,11 @@ class Complemento extends BaseModel
         return $this->getTiene('ComercioExterior');
     }
 
+    public function getTienePagos()
+    {
+        return $this->getTiene('ComercioExterior');
+    }
+
     // ==================================================================
     //
     // Funciones de procesamiento interno para procesar complementos.
@@ -106,6 +121,7 @@ class Complemento extends BaseModel
         return [
             'TimbreFiscalDigital',
             'ComercioExterior',
+            'Pagos',
         ];
     }
 }
